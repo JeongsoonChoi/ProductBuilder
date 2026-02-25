@@ -1,1 +1,151 @@
-/* Add styles here */
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f5a623;
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --white-color: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: subtle-noise-texture.png;
+}
+
+.container {
+    background-color: var(--white-color);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    padding: 40px;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+header h1 .fa-dice {
+    margin-right: 10px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.lotto-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.lotto-number {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.lotto-number:hover {
+    transform: scale(1.1) rotateY(180deg);
+}
+
+#generate-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+#generate-btn .fa-sync-alt {
+    margin-right: 10px;
+    animation: rotate 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+#generate-btn:hover {
+    background-color: #357abd;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.6);
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .lotto-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    #generate-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}

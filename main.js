@@ -2,6 +2,30 @@
 document.addEventListener('DOMContentLoaded', () => {
     const lottoNumbersContainer = document.querySelector('.lotto-numbers');
     const generateBtn = document.getElementById('generate-btn');
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+
+    // 테마 설정 함수
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+    }
+
+    // 초기 테마 설정
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+
+    // 테마 토글 이벤트
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+    });
 
     function generateLottoNumbers() {
         lottoNumbersContainer.innerHTML = '';

@@ -8,6 +8,19 @@
     --text-color: #333;
     --white-color: #fff;
     --shadow-color: rgba(0, 0, 0, 0.1);
+    --footer-color: #999;
+    --header-p-color: #777;
+}
+
+[data-theme="dark"] {
+    --primary-color: #64b5f6;
+    --secondary-color: #ffb74d;
+    --background-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --white-color: #2d2d2d;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --footer-color: #888;
+    --header-p-color: #bbb;
 }
 
 * {
@@ -24,7 +37,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: subtle-noise-texture.png;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -35,7 +48,20 @@ body {
     text-align: center;
     width: 90%;
     max-width: 600px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .container:hover {
@@ -61,7 +87,7 @@ header h1 .fa-dice {
 
 header p {
     font-size: 1.1rem;
-    color: #777;
+    color: var(--header-p-color);
     margin-bottom: 30px;
 }
 
@@ -78,7 +104,7 @@ header p {
     height: 60px;
     border-radius: 50%;
     background-color: var(--secondary-color);
-    color: var(--white-color);
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,7 +121,7 @@ header p {
 
 #generate-btn {
     background-color: var(--primary-color);
-    color: var(--white-color);
+    color: #fff;
     border: none;
     border-radius: 30px;
     padding: 15px 30px;
@@ -108,17 +134,10 @@ header p {
 
 #generate-btn .fa-sync-alt {
     margin-right: 10px;
-    animation: rotate 1.5s ease-in-out infinite;
 }
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 
 #generate-btn:hover {
-    background-color: #357abd;
+    filter: brightness(1.1);
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(74, 144, 226, 0.6);
 }
@@ -126,7 +145,7 @@ header p {
 footer {
     margin-top: 40px;
     font-size: 0.9rem;
-    color: #999;
+    color: var(--footer-color);
 }
 
 @media (max-width: 480px) {

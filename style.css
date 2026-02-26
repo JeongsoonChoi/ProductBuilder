@@ -91,55 +91,101 @@ header p {
     margin-bottom: 30px;
 }
 
-.lotto-numbers {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-}
-
-.lotto-number {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: var(--secondary-color);
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: 700;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+/* AI Test Styles */
+.upload-area {
+    border: 2px dashed var(--primary-color);
+    border-radius: 15px;
+    padding: 40px 20px;
+    cursor: pointer;
     transition: all 0.3s ease;
-    transform-style: preserve-3d;
+    margin-bottom: 20px;
+    background-color: var(--background-color);
 }
 
-.lotto-number:hover {
-    transform: scale(1.1) rotateY(180deg);
+.upload-area:hover {
+    background-color: rgba(74, 144, 226, 0.1);
 }
 
-#generate-btn {
+.upload-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.image-preview-container {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto 20px;
+}
+
+#face-image {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.loading {
+    margin-top: 20px;
+    font-weight: 700;
+}
+
+.result-container {
+    margin-top: 30px;
+}
+
+#result-message {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.result-bar-wrapper {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.result-label {
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.progress-bar-container {
+    height: 25px;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
     background-color: var(--primary-color);
+    width: 0%;
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.retry-btn {
+    background-color: var(--secondary-color);
     color: #fff;
     border: none;
     border-radius: 30px;
-    padding: 15px 30px;
-    font-size: 1.2rem;
+    padding: 12px 25px;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
+    margin-top: 20px;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
 }
 
-#generate-btn .fa-sync-alt {
-    margin-right: 10px;
-}
-
-#generate-btn:hover {
+.retry-btn:hover {
     filter: brightness(1.1);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.6);
+    transform: translateY(-2px);
 }
 
 footer {

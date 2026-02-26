@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또 번호 추천</title>
+    <title>AI 동물상 테스트</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,14 +16,29 @@
             <i class="fas fa-moon"></i>
         </button>
         <header>
-            <h1><i class="fas fa-dice"></i> 로또 번호 추천</h1>
-            <p>버튼을 클릭하여 행운의 번호를 받아보세요!</p>
+            <h1><i class="fas fa-paw"></i> 인공지능 동물상 테스트</h1>
+            <p>나는 강아지상일까, 고양이상일까? AI가 분석해드립니다!</p>
         </header>
         <main>
-            <div class="lotto-numbers">
-                <!-- 자바스크립트로 번호가 채워집니다. -->
+            <div id="upload-area" class="upload-area">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <p>사진을 올리거나 눌러서 업로드하세요</p>
+                <input type="file" id="image-upload" accept="image/*" hidden>
             </div>
-            <button id="generate-btn"><i class="fas fa-sync-alt"></i> 번호 생성</button>
+            
+            <div id="image-preview-container" class="image-preview-container" style="display: none;">
+                <img id="face-image" src="" alt="your image">
+                <div id="loading" class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>AI가 분석 중입니다...</p>
+                </div>
+            </div>
+
+            <div id="result-container" class="result-container" style="display: none;">
+                <h2 id="result-message"></h2>
+                <div id="label-container"></div>
+                <button id="retry-btn" class="retry-btn"><i class="fas fa-redo"></i> 다시 하기</button>
+            </div>
 
             <section class="contact-section">
                 <hr>

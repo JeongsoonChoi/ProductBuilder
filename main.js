@@ -1,11 +1,20 @@
+const URL = "https://teachablemachine.withgoogle.com/models/4ZhfdBRTe/";
+
+let model, labelContainer, maxPredictions;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const lottoNumbersContainer = document.querySelector('.lotto-numbers');
-    const generateBtn = document.getElementById('generate-btn');
+    const uploadArea = document.getElementById('upload-area');
+    const imageUpload = document.getElementById('image-upload');
+    const previewContainer = document.getElementById('image-preview-container');
+    const faceImage = document.getElementById('face-image');
+    const loading = document.getElementById('loading');
+    const resultContainer = document.getElementById('result-container');
+    const resultMessage = document.getElementById('result-message');
+    const retryBtn = document.getElementById('retry-btn');
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = themeToggle.querySelector('i');
 
-    // 테마 설정 함수
+    // Theme logic
     function setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
@@ -15,40 +24,73 @@ document.addEventListener('DOMContentLoaded', () => {
             themeIcon.classList.replace('fa-sun', 'fa-moon');
         }
     }
-
-    // 초기 테마 설정
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
-
-    // 테마 토글 이벤트
     themeToggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-    function generateLottoNumbers() {
-        lottoNumbersContainer.innerHTML = '';
-        const numbers = new Set();
-        while (numbers.size < 6) {
-            const randomNumber = Math.floor(Math.random() * 45) + 1;
-            numbers.add(randomNumber);
-        }
-
-        const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
-
-        sortedNumbers.forEach((number, index) => {
-            setTimeout(() => {
-                const numberElement = document.createElement('div');
-                numberElement.classList.add('lotto-number');
-                numberElement.textContent = number;
-                lottoNumbersContainer.appendChild(numberElement);
-            }, index * 200); // 숫자가 순차적으로 나타나는 애니메이션
-        });
+    // Load AI Model
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+        labelContainer = document.getElementById("label-container");
     }
 
-    generateBtn.addEventListener('click', generateLottoNumbers);
+    uploadArea.addEventListener('click', () => imageUpload.click());
 
-    // 페이지 로드 시 초기 번호 생성
-    generateLottoNumbers();
+    imageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                faceImage.src = event.target.result;
+                uploadArea.style.display = 'none';
+                previewContainer.style.display = 'block';
+                loading.style.display = 'block';
+                resultContainer.style.display = 'none';
+                
+                if (!model) await init();
+                await predict();
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    async function predict() {
+        const prediction = await model.predict(faceImage);
+        prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+        
+        loading.style.display = 'none';
+        resultContainer.style.display = 'block';
+        
+        const topResult = prediction[0].className;
+        resultMessage.innerText = `당신은 ${topResult}상 입니다!`;
+
+        labelContainer.innerHTML = '';
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction = prediction[i].className;
+            const probability = (prediction[i].probability * 100).toFixed(0);
+            
+            const barWrapper = document.createElement('div');
+            barWrapper.className = 'result-bar-wrapper';
+            barWrapper.innerHTML = `
+                <div class="result-label">${classPrediction}</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: ${probability}%">${probability}%</div>
+                </div>
+            `;
+            labelContainer.appendChild(barWrapper);
+        }
+    }
+
+    retryBtn.addEventListener('click', () => {
+        uploadArea.style.display = 'block';
+        previewContainer.style.display = 'none';
+        resultContainer.style.display = 'none';
+        imageUpload.value = '';
+    });
 });

@@ -106,6 +106,12 @@ header p {
     background-color: rgba(74, 144, 226, 0.1);
 }
 
+.upload-area.drag-over {
+    background-color: rgba(74, 144, 226, 0.2);
+    border-color: var(--secondary-color);
+    transform: scale(1.02);
+}
+
 .upload-icon {
     font-size: 3rem;
     color: var(--primary-color);

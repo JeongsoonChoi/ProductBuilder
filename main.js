@@ -40,11 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         labelContainer = document.getElementById("label-container");
     }
 
-    uploadArea.addEventListener('click', () => imageUpload.click());
-
-    imageUpload.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
+    // File Handling
+    function handleFile(file) {
+        if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = async (event) => {
                 faceImage.src = event.target.result;
@@ -57,7 +55,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 await predict();
             };
             reader.readAsDataURL(file);
+        } else {
+            alert('이미지 파일만 업로드 가능합니다.');
         }
+    }
+
+    // Click to upload
+    uploadArea.addEventListener('click', () => imageUpload.click());
+
+    imageUpload.addEventListener('change', (e) => {
+        handleFile(e.target.files[0]);
+    });
+
+    // Drag and Drop logic
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+    });
+
+    ['dragleave', 'dragend'].forEach(type => {
+        uploadArea.addEventListener(type, () => {
+            uploadArea.classList.remove('drag-over');
+        });
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        handleFile(file);
     });
 
     async function predict() {
